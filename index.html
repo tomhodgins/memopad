@@ -37,6 +37,7 @@
       font-size: 10pt;
       width: 100%;
       position: fixed;
+      -webkit-text-size-adjust: 100%;
     }
     html,
     body,
@@ -106,14 +107,14 @@
       transition: color .2s ease-in-out;
       cursor: pointer;
       position: fixed;
-      width: 50%;
+      width: calc(50% - 1.5em);
       left: -100%;
       bottom: 0;
       font-weight: bolder;
       transition: left .2s ease-in-out;
     }
     aside button:last-of-type {
-      left: -50%;
+      left: calc(-50% - 3em);
       transition: left .2s ease-in-out,
                   color .2s ease-in-out,
                   background .2s ease-in-out;
@@ -152,9 +153,9 @@
       left: 0;
     }
     .visible ~ aside button:last-of-type {
-      left: 50%;
+      left: calc(50% - 1.5em);
     }
-    @media (min-width: 800px) {
+    @media (min-width: 600px) {
       aside {
         width: 25%;
       }
