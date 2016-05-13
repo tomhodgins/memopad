@@ -37,7 +37,6 @@
       font-size: 10pt;
       width: 100%;
       position: fixed;
-      -webkit-text-size-adjust: 100%;
     }
     html,
     body,
@@ -107,14 +106,14 @@
       transition: color .2s ease-in-out;
       cursor: pointer;
       position: fixed;
-      width: calc(50% - 1.5em);
+      width: 50%;
       left: -100%;
       bottom: 0;
       font-weight: bolder;
       transition: left .2s ease-in-out;
     }
     aside button:last-of-type {
-      left: calc(-50% - 3em);
+      left: -50%;
       transition: left .2s ease-in-out,
                   color .2s ease-in-out,
                   background .2s ease-in-out;
@@ -153,9 +152,9 @@
       left: 0;
     }
     .visible ~ aside button:last-of-type {
-      left: calc(50% - 1.5em);
+      left: 50%;
     }
-    @media (min-width: 600px) {
+    @media (min-width: 800px) {
       aside {
         width: 25%;
       }
@@ -342,6 +341,7 @@
       var li = document.querySelectorAll('li')
       for (i=0;i<li.length;i++){
         li[i].innerHTML = list[li[i].id] || 'Blank Note'
+        li[i].setAttribute('accesskey',i+1)
       }
     }
     // update share link
