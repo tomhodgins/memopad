@@ -105,15 +105,15 @@
       margin: 0 auto;
       transition: color .2s ease-in-out;
       cursor: pointer;
-      position: fixed;
+      position: absolute;
       width: 50%;
-      left: -100%;
+      left: 0;
       bottom: 0;
       font-weight: bolder;
       transition: left .2s ease-in-out;
     }
     aside button:last-of-type {
-      left: -50%;
+      left: calc(50% + 1.5em);
       transition: left .2s ease-in-out,
                   color .2s ease-in-out,
                   background .2s ease-in-out;
@@ -149,7 +149,7 @@
                   margin-left .2s ease-in-out;
     }
     .visible ~ aside button {
-      left: 0;
+      left: 0%;
     }
     .visible ~ aside button:last-of-type {
       left: 50%;
