@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html manifest=memopad.manifest>
+<head>
+  <meta charset=utf-8>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <title>Memo Pad</title>
+  <style>
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-kerning: auto;
+      outline: none;
+    }
+    ::-moz-selection {
+      color: white;
+      text-shadow: rgba(0,0,0,.3) 1px 1px 1px;
+      background-color: #07f;
+    }
+    ::-webkit-selection {
+      color: white;
+      background-color: #07f;
+      text-shadow: rgba(0,0,0,.3) 1px 1px 1px;
+    }
+    ::selection {
+      color: white;
+      background-color: #07f;
+      text-shadow: rgba(0,0,0,.3) 1px 1px 1px;
+    }
+    html,body {
+      margin: 0;
+      font-size: 10pt;
+      width: 100%;
+      position: fixed;
+    }
+    html,
+    body,
+    aside,
+    textarea {
+      height: 100%;
+    }
+    aside {
+      width: calc(100% - 6em);
+      position: fixed;
+      background: white;
+      left: calc(-100% - 6em);
+      overflow: scroll;
+      overflow-y: scroll;
+      transition: left .2s ease-in-out;
+    }
+    #toggle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: auto;
+      display: block;
+      width: 1.5em;
+      transition: left .2s ease-in-out;
+    }
+    #toggle.visible {
+      left: calc(100% - 3em);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      margin-bottom: calc(2em + 14pt);
+      overflow-y: scroll;
+    }
+    li {
+      font-family: sans-serif;
+      font-size: 150%;
+      padding: .5em;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    li.current {
+      background: lightskyblue;
+    }
+    textarea {
+      width: 100%;
+      background: #eee;
+      color: #333;
+      border: none;
+      font-size: 140%;
+      line-height: 1.4;
+      padding: 4em 1.5em 1.5em 1.5em;
+      transition: margin-left .2s ease-in-out;
+    }
+    button {
+      -webkit-appearance: none;
+      appearance: none;
+      border: none;
+      padding: .25em;
+      font-size: 200%;
+      background: white;
+      margin: 0 auto;
+      transition: color .2s ease-in-out;
+      cursor: pointer;
+      position: fixed;
+      width: 50%;
+      left: -100%;
+      bottom: 0;
+      font-weight: bolder;
+      transition: left .2s ease-in-out;
+    }
+    aside button:last-of-type {
+      left: -50%;
+      transition: left .2s ease-in-out,
+                  color .2s ease-in-out,
+                  background .2s ease-in-out;
+    }
+    a {
+      position: fixed;
+      display: block;
+      padding: .25em .5em;
+      top: 0;
+      right: 0;
+      font-size: 200%;
+      color: rgba(0,0,0,.7);
+      text-decoration: none;
+      transition: color .2s ease-in-out;
+    }
+    a:focus,
+    a:hover,
+    button:focus,
+    button:hover {
+      color: #07f;
+    }
+    aside button:last-of-type:focus,
+    aside button:last-of-type:hover {
+      color: white;
+      background: red;
+    }
+    .visible ~ aside {
+      left: 0;
+    }
+    .visible ~ textarea {
+      width: 100%;
+      transition: width .2s ease-in-out,
+                  margin-left .2s ease-in-out;
+    }
+    .visible ~ aside button {
+      left: 0;
+    }
+    .visible ~ aside button:last-of-type {
+      left: 50%;
+    }
+    @media (min-width: 800px) {
+      aside {
+        width: 25%;
+      }
+      button {
+        width: 12.5%;
+        left: -25%;
+      }
+      aside button:last-of-type {
+        left: -12.5%;
+      }
+      #toggle.visible {
+        left: 25%;
+      }
+      .visible ~ textarea {
+        width: 75%;
+        margin-left: 25%;
+      }
+      .visible ~ aside button:last-of-type {
+        left: 12.5%;
+      }
+    }
+  </style>
+  <script>
+    var icon = document.createElement('canvas'),
+    c = icon.getContext('2d'),
+    favicon = document.createElement('link'),
+    mobile = document.createElement('link')
+    //Set Icon Resolution
+    icon.width = 200
+    icon.height = 200
+    //Rounded-corner background
+    c.fillStyle='lightskyblue'
+    c.beginPath()
+    c.moveTo(10,0)
+    c.lineTo(190,0)
+    c.quadraticCurveTo(200,0,200,10)
+    c.lineTo(200,190)
+    c.quadraticCurveTo(200,200,190,200)
+    c.lineTo(10,200)
+    c.quadraticCurveTo(0,200,0,190)
+    c.lineTo(0,10)
+    c.quadraticCurveTo(0,0,10,0)
+    c.closePath()
+    c.fill()
+    //Address Bar
+    c.fillStyle='white'
+    c.beginPath()
+    c.moveTo(150,35)
+    c.lineTo(50,35)
+    c.lineTo(25,165)
+    c.lineTo(175,165)
+    c.closePath()
+    c.fill()
+    // Dots
+    c.fillStyle='pink'
+    c.beginPath()
+    c.arc(50,50,6.5,10,1,2,2*Math.PI)
+    c.closePath()
+    c.fill()
+    c.beginPath()
+    c.arc(47.5,47.5,6.5,10,1,2,2*Math.PI)
+    c.closePath()
+    c.fill()
+    // Lines
+    c.lineWidth='13'
+    c.strokeStyle='yellow'
+    c.beginPath()
+    c.lineTo(50,50)
+    c.lineTo(115,115)
+    c.closePath()
+    c.stroke()
+    c.fillStyle='tan'
+    c.beginPath()
+    c.lineTo(119,109)
+    c.lineTo(124,124)
+    c.lineTo(109,119)
+    c.closePath()
+    c.fill()
+    //Export canvas image and attach to head
+    favicon.type = 'image/x-icon'
+    favicon.rel = 'shortcut icon'
+    mobile.rel = 'apple-touch-icon'
+    favicon.href = mobile.href = icon.toDataURL('image/png')
+    document.head.appendChild(favicon)
+    document.head.appendChild(mobile)
+  </script>
+</head>
+<body>
+  <button id=toggle onclick=sidebar() accesskey=s>→</button>
+  <aside>
+    <ul></ul>
+    <button onclick=add() accesskey=a>+</button>
+    <button onclick=trash() accesskey=t>&times;</button>
+  </aside>
+  <textarea autofocus></textarea>
+  <a>#</a>
+  <script>
+    var text = document.querySelector('textarea'),
+        aside = document.querySelector('aside'),
+        ul = document.querySelector('ul'),
+        button = document.querySelector('button'),
+        a = document.querySelector('a'),
+        memos = list = deleted = {},
+        current = ''
+    // add memo
+    function add(){
+      if (localStorage.memos){
+        memos = JSON.parse(localStorage.memos)
+      }
+      current = Date.now()
+      memos[current] = ''
+      localStorage.memos = JSON.stringify(memos)
+      display(current)
+    }
+    // display memos in sidebar
+    function display(id){
+      current = id || current
+      if (!localStorage.memos){
+        add()
+      }
+      list = JSON.parse(localStorage.memos)
+      for (memo in list){
+        var li = document.createElement('li')
+        li.id = memo
+        li.setAttribute('onclick','load(id)')
+        li.innerHTML = list[memo] || 'Blank Note'
+        if (!document.getElementById(memo)){
+          ul.appendChild(li)
+        }
+        current = memo
+      }
+      load(current)
+      refresh()
+      link()
+    }
+    // load memo
+    function load(id){
+      var li = document.querySelectorAll('li')
+      for (i=0;i<li.length;i++){
+        li[i].className = ''
+      }
+      document.getElementById(id).className = 'current'
+      list = JSON.parse(localStorage.memos)
+      text.value = list[id]
+      a.href = '#'+btoa(text.value)
+      if(('ontouchstart' in window)||(navigator.msMaxTouchPoints>0)){
+      } else {
+        text.focus()
+      }
+      current = id
+    }
+    // delete memo
+    function trash(){
+      list = JSON.parse(localStorage.memos)
+      if (localStorage.deleted){
+        deleted = JSON.parse(localStorage.deleted)
+      }
+      deleted[current] = list[current]
+      delete list[current]
+      localStorage.memos = JSON.stringify(list)
+      localStorage.deleted = JSON.stringify(deleted)
+      document.getElementById(current).remove()
+      var li = document.querySelectorAll('li')
+      if (li.length == 0){
+        add()
+      } else {
+
+      }
+      display()
+      refresh()
+    }
+    // toggle sidebar display
+    function sidebar(){
+      refresh()
+      button.innerHTML = button.innerHTML=='→'?'←':'→'
+      button.className = button.className=='visible'?'':'visible'
+    }
+    // update sidebar names
+    function refresh(){
+      list = JSON.parse(localStorage.memos)
+      var li = document.querySelectorAll('li')
+      for (i=0;i<li.length;i++){
+        li[i].innerHTML = list[li[i].id] || 'Blank Note'
+      }
+    }
+    // update share link
+    document.addEventListener('keyup',link)
+    function link(){
+      var text = document.querySelector('textarea')
+      a.href = '#'+btoa(text.value)
+      memos = JSON.parse(localStorage.memos)
+      memos[current] = text.value
+      localStorage.memos = JSON.stringify(memos)
+    }
+    onload = function(){
+      display()
+      if (location.hash){
+        add()
+        display()
+        text.value = atob(location.hash.slice(1))
+      }
+      link()
+    }
+  </script>
+</body>
+</html>
