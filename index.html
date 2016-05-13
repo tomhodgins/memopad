@@ -247,7 +247,7 @@
   <aside>
     <ul></ul>
     <button onclick=add() accesskey=a>+</button>
-    <button onclick=trash() accesskey=t>&times;</button>
+    <button onclick=trash() accesskey=t>×</button>
   </aside>
   <textarea autofocus></textarea>
   <a>#</a>
@@ -308,23 +308,26 @@
     }
     // delete memo
     function trash(){
-      list = JSON.parse(localStorage.memos)
-      if (localStorage.deleted){
-        deleted = JSON.parse(localStorage.deleted)
-      }
-      deleted[current] = list[current]
-      delete list[current]
-      localStorage.memos = JSON.stringify(list)
-      localStorage.deleted = JSON.stringify(deleted)
-      document.getElementById(current).remove()
-      var li = document.querySelectorAll('li')
-      if (li.length == 0){
-        add()
-      } else {
+      var certain = confirm('Are You sure?')
+      if(certain){
+        list = JSON.parse(localStorage.memos)
+        if (localStorage.deleted){
+          deleted = JSON.parse(localStorage.deleted)
+        }
+        deleted[current] = list[current]
+        delete list[current]
+        localStorage.memos = JSON.stringify(list)
+        localStorage.deleted = JSON.stringify(deleted)
+        document.getElementById(current).remove()
+        var li = document.querySelectorAll('li')
+        if (li.length == 0){
+          add()
+        } else {
 
+        }
+        display()
+        refresh()
       }
-      display()
-      refresh()
     }
     // toggle sidebar display
     function sidebar(){
