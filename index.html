@@ -4,7 +4,7 @@
   <meta charset=utf-8>
   <meta name=apple-mobile-web-app-capable content=yes>
   <meta name=apple-mobile-web-app-status-bar-style content=black>
-  <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name=viewport content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
   <title>Memo Pad</title>
   <style>
     * {
@@ -71,6 +71,7 @@
       margin: 0;
       width: 100%;
       margin-bottom: calc(2em + 14pt);
+      overflow: auto;
       overflow-y: scroll;
     }
     li {
@@ -82,6 +83,26 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    li * {
+      margin: 0;
+      padding: 0;
+      font-size: inherit;
+      line-height: 1.4;
+      font-weight: 400;
+      font-family: sans-serif;
+    }
+    body {
+      margin: 0;
+    }
+    q:before {content: '\201c'}
+    q:after  {content: '\201d'}
+    q q:before {content: '\2018'}
+    q q:after  {content: '\2019'}
+    
+    
+    
+    
+    
     li.current {
       background: lightskyblue;
     }
@@ -159,11 +180,11 @@
         width: 25%;
       }
       button {
-        width: 12.5%;
-        left: -25%;
+        width: 50%;
+        left: -50%;
       }
       aside button:last-of-type {
-        left: -12.5%;
+        left: -25%;
       }
       #toggle.visible {
         left: 25%;
@@ -173,7 +194,7 @@
         margin-left: 25%;
       }
       .visible ~ aside button:last-of-type {
-        left: 12.5%;
+        left: 50%;
       }
     }
   </style>
@@ -340,7 +361,7 @@
       list = JSON.parse(localStorage.memos)
       var li = document.querySelectorAll('li')
       for (i=0;i<li.length;i++){
-        li[i].innerHTML = list[li[i].id] || 'Blank Note'
+        li[i].innerHTML = list[li[i].id].split('\n')[0] || 'Blank Note'
         li[i].setAttribute('accesskey',i+1)
       }
     }
