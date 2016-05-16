@@ -59,7 +59,10 @@
       left: 0;
       bottom: auto;
       display: block;
-      width: 1.5em;
+      width: 2em;
+      padding: .5em;
+      font-size: 160%;
+      line-height: 1;
       transition: left .2s ease-in-out;
     }
     #toggle.visible {
@@ -91,18 +94,6 @@
       font-weight: 400;
       font-family: sans-serif;
     }
-    body {
-      margin: 0;
-    }
-    q:before {content: '\201c'}
-    q:after  {content: '\201d'}
-    q q:before {content: '\2018'}
-    q q:after  {content: '\2019'}
-    
-    
-    
-    
-    
     li.current {
       background: lightskyblue;
     }
@@ -264,7 +255,7 @@
   </script>
 </head>
 <body>
-  <button id=toggle onclick=sidebar() accesskey=s>→</button>
+  <button id=toggle onclick=sidebar() accesskey=s>▶︎</button>
   <aside>
     <ul></ul>
     <button onclick=add() accesskey=a>+</button>
@@ -353,7 +344,7 @@
     // toggle sidebar display
     function sidebar(){
       refresh()
-      button.innerHTML = button.innerHTML=='→'?'←':'→'
+      button.innerHTML = button.innerHTML=='▶︎'?'◀︎':'▶︎'
       button.className = button.className=='visible'?'':'visible'
     }
     // update sidebar names
