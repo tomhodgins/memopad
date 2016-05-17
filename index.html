@@ -373,6 +373,9 @@
         text.value = atob(location.hash.slice(1))
       }
       link()
+      var fLi = document.querySelector('li:first-of-type'),
+          button = document.querySelector('button:first-of-type')
+      button.style.height = fLi.clientHeight+'px'
     }
   </script>
 </body>
