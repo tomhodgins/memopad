@@ -269,7 +269,7 @@
   </script>
 </head>
 <body>
-  <button id=toggle onclick=sidebar() accesskey=s>▶︎</button>
+  <button id=toggle onclick=sidebar() accesskey=s>▶</button>
   <aside>
     <ul></ul>
     <button onclick=add() accesskey=a>+</button>
@@ -358,7 +358,7 @@
     // toggle sidebar display
     function sidebar(){
       refresh()
-      button.innerHTML = button.innerHTML=='▶︎'?'◀︎':'▶︎'
+      button.innerHTML = button.innerHTML=='▶'?'◀':'▶'
       button.className = button.className=='visible'?'':'visible'
     }
     // update sidebar names
