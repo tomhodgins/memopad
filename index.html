@@ -62,7 +62,6 @@
       padding: .5em;
       font-size: 160%;
       line-height: 1;
-      transition: left .2s ease-in-out;
     }
     #toggle.visible {
       left: calc(100% - 3.75em);
@@ -77,6 +76,7 @@
       overflow-y: scroll;
     }
     li {
+      color: #555;
       font-family: sans-serif;
       font-size: 150%;
       padding: .5em;
@@ -88,7 +88,6 @@
     li * {
       margin: 0;
       padding: 0;
-      color: #555;
       font-size: inherit;
       line-height: 1.4;
       font-weight: 400;
@@ -127,8 +126,7 @@
     }
     aside button:last-of-type {
       left: calc(50% + 1.5em);
-      transition: left .2s ease-in-out,
-                  color .2s ease-in-out,
+      transition: color .2s ease-in-out,
                   background .2s ease-in-out;
     }
     a {
