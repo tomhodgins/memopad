@@ -88,13 +88,14 @@
     li * {
       margin: 0;
       padding: 0;
+      color: #555;
       font-size: inherit;
       line-height: 1.4;
       font-weight: 400;
       font-family: sans-serif;
     }
     li.current {
-      background: lightskyblue;
+      background: #afa;
     }
     textarea {
       width: 100%;
@@ -121,7 +122,8 @@
       left: 0;
       bottom: 0;
       font-weight: bolder;
-      transition: left .2s ease-in-out;
+      transition: left .2s ease-in-out,
+                  color .2s ease-in-out;
     }
     aside button:last-of-type {
       left: calc(50% + 1.5em);
@@ -144,7 +146,7 @@
     a:hover,
     button:focus,
     button:hover {
-      color: #07f;
+      color: #0c0;
     }
     aside button:last-of-type:focus,
     aside button:last-of-type:hover {
