@@ -197,7 +197,11 @@
     icon.width = 200
     icon.height = 200
     //Rounded-corner background
-    c.fillStyle='lightskyblue'
+    var g = c.createRadialGradient(100,100,150,100,150,0)
+    g.addColorStop(0,'#050')
+    g.addColorStop(1,'#0e0')
+    c.fillStyle = g
+    c.fill()
     c.beginPath()
     c.moveTo(10,0)
     c.lineTo(190,0)
@@ -210,17 +214,28 @@
     c.quadraticCurveTo(0,0,10,0)
     c.closePath()
     c.fill()
-    //Address Bar
-    c.fillStyle='white'
+    // Paper
+    c.fillStyle='rgba(0,0,0,.3)'
     c.beginPath()
-    c.moveTo(150,35)
-    c.lineTo(50,35)
-    c.lineTo(25,165)
-    c.lineTo(175,165)
+    c.moveTo(35,155)
+    c.lineTo(165,155)
+    c.lineTo(35,157)
+    c.lineTo(165,157)
+    c.closePath()
+    c.fill()
+    var g = c.createLinearGradient(0, 0, 0, 200)
+    g.addColorStop(0,'rgba(255,255,255,.5)')
+    g.addColorStop(1,'rgba(255,255,255,1)')
+    c.fillStyle = g
+    c.beginPath()
+    c.moveTo(140,45)
+    c.lineTo(60,45)
+    c.lineTo(35,155)
+    c.lineTo(165,155)
     c.closePath()
     c.fill()
     // Dots
-    c.fillStyle='pink'
+    c.fillStyle='black'
     c.beginPath()
     c.arc(50,50,6.5,10,1,2,2*Math.PI)
     c.closePath()
@@ -230,14 +245,14 @@
     c.closePath()
     c.fill()
     // Lines
-    c.lineWidth='13'
-    c.strokeStyle='yellow'
+    c.lineWidth='12.5'
+    c.strokeStyle='black'
     c.beginPath()
     c.lineTo(50,50)
     c.lineTo(115,115)
     c.closePath()
     c.stroke()
-    c.fillStyle='tan'
+    c.fillStyle='black'
     c.beginPath()
     c.lineTo(119,109)
     c.lineTo(124,124)
