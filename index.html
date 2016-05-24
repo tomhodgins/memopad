@@ -105,6 +105,7 @@
       line-height: 1.4;
       padding: 4em 1.5em 1.5em 1.5em;
       transition: margin-left .2s ease-in-out;
+      font-family: 'Source Code Pro', Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
     }
     button {
       -webkit-appearance: none;
@@ -275,7 +276,7 @@
     <button onclick=add() accesskey=a>+</button>
     <button onclick=trash() accesskey=t>×</button>
   </aside>
-  <textarea autofocus></textarea>
+  <textarea autofocus autocapitalize=off autocorrect=off></textarea>
   <a>#</a>
   <script>
     var text = document.querySelector('textarea'),
